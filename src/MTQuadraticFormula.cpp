@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <wchar.h>
 #include "../include/MTIO.hpp"
 
 #define MT_QFC_ERROR_MSG "Formatting error on last input, try again\n"
@@ -53,7 +54,32 @@ void quadraticFormula()
 
 	if (!MT_QUIT_FLAG)
 	{
+		putchar('\n');
+
 		discriminant = (b * b) - (4 * a * c);
+
+		if (a != 0)
+		{
+			printf("%lfx^2", (double)a);
+
+			if ((b != 0) || (c != 0))
+				printf(" + ");
+		}
+		if (b != 0)
+		{
+			printf("%lfx", (double)b);
+
+			if (c != 0)
+				printf(" + ");
+		}
+
+		if (c != 0)
+			printf("%lf", (double)c);
+
+		if ((a == 0) && (b == 0) && (c == 0))
+			putchar('0');
+
+		printf(" = 0 \n");
 
 		if (a != 0) // Equation is quadratic
 		{
@@ -67,16 +93,24 @@ void quadraticFormula()
 				printf("First root: %lf\n", (double)((-b + sqrt(discriminant)) / (2 * a)));
 				printf("Second root: %lf\n", (double)((-b - sqrt(discriminant)) / (2 * a)));
 			}
-			else // Quadratic has multiplicity of 2
-				printf("Multiplicity of 2, singular root is: %lf\n", (double)(-b / (2 * a)));
+			else if (b != 0) // Quadratic has multiplicity of 2
+				printf("Multiplicity of 2, singular root is: %lf\n", (double)((b * -1.0L) / (2 * a)));
+			else
+				printf("Multiplicity of 2, singular root is: 0\n");
 		}
 		else if (b != 0) // Equation is linear
 		{
-			printf("Singular root is: %lf", (double)(-c / b));
+			printf("Singular root is: %lf\n", (double)(-c / b));
 		}
-		else // Not an equation
+		else if (c != 0) // Constant may or may not equal zero
 		{
-			printf("You've only entered a constant value...");
+			printf("You've only entered a constant value...\n");
 		}
+		else // Stated zero is equal to zero
+		{
+			printf("0 does, in fact, equal 0\n");
+		}
+
+		putchar('\n');
 	} // Check if the user has quit the program
 }
