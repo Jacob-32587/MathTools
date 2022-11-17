@@ -11,6 +11,7 @@
 #define MT_LD_ERROR 1
 
 long double promptAndGetLD(const char *message, char *buff, size_t buffSize);
+char *getInput(char *buffer, size_t bufferSize);
 short LDErrorCheck(long double, const char *);
 
 #endif

@@ -2,6 +2,7 @@
 #include <math.h>
 #include <wchar.h>
 #include "../include/MTIO.hpp"
+#include <float.h>
 
 #define MT_QFC_ERROR_MSG "Formatting error on last input, try again\n"
 #define MT_QFC_BUFF_SIZE 32
@@ -52,12 +53,13 @@ void quadraticFormula()
 		break;
 	} // User input collection loop
 
-	if (!MT_QUIT_FLAG)
+	if (!MT_QUIT_FLAG) // Only loop while the user has not quit
 	{
 		putchar('\n');
 
 		discriminant = (b * b) - (4 * a * c);
 
+		// Chain of if statements to create an equation in the console
 		if (a != 0)
 		{
 			printf("%lfx^2", (double)a);
@@ -72,7 +74,6 @@ void quadraticFormula()
 			if (c != 0)
 				printf(" + ");
 		}
-
 		if (c != 0)
 			printf("%lf", (double)c);
 
@@ -80,6 +81,8 @@ void quadraticFormula()
 			putchar('0');
 
 		printf(" = 0 \n");
+
+		// Output result of input coefficients
 
 		if (a != 0) // Equation is quadratic
 		{
@@ -112,5 +115,5 @@ void quadraticFormula()
 		}
 
 		putchar('\n');
-	} // Check if the user has quit the program
+	} // while() use has not quit
 }
