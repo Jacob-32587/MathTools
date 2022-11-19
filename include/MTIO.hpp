@@ -3,15 +3,17 @@
 
 #include <ctype.h>
 
-#define MT_ESCAPE "quit"
+#define MT_ESCAPE "QUIT"
 #define MT_ESCAPE_SIZE 4
-#define MT_QUIT 9
 
-#define MT_LD_NO_ERROR 0
-#define MT_LD_ERROR 1
+#define MT_NO_ERROR 0
+#define MT_TYPE_ERROR 1
 
-long double promptAndGetLD(const char *message, char *buff, size_t buffSize);
-char *getInput(char *buffer, size_t bufferSize);
-short LDErrorCheck(long double, const char *);
+long double promptAndGetLD(const char *, char *, size_t, bool *);
+long long promptAndGetLL(const char *, char *, size_t, bool *);
+char *getInput(char *, size_t);
+bool quitCheck(char *);
+short errorCheckLD(long double);
+short errorCheckLL(long long);
 
 #endif

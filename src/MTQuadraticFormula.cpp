@@ -7,8 +7,6 @@
 #define MT_QFC_ERROR_MSG "Formatting error on last input, try again\n"
 #define MT_QFC_BUFF_SIZE 32
 
-extern bool MT_QUIT_FLAG;
-
 void quadraticFormula()
 {
 	char buff[MT_QFC_BUFF_SIZE];
@@ -16,45 +14,41 @@ void quadraticFormula()
 	long double a = 0.0L;
 	long double b = 0.0L;
 	long double c = 0.0L;
-
 	long double discriminant = 0.0L;
 
 	short temp = 0;
 
+	bool MT_QUIT_FLAG = false;
+
 	while (!MT_QUIT_FLAG)
 	{
-		a = promptAndGetLD("a = ", buff, MT_QFC_BUFF_SIZE);
-		if (temp = LDErrorCheck(a, MT_QFC_ERROR_MSG))
+		a = promptAndGetLD("a = ", buff, MT_QFC_BUFF_SIZE, &MT_QUIT_FLAG);
+		if ((temp = errorCheckLD(a)) && !MT_QUIT_FLAG)
 		{
-			if (temp == MT_QUIT)
-				break;
-			else
-				continue;
+			printf("%s", MT_QFC_ERROR_MSG);
+			continue;
 		}
+		else if (MT_QUIT_FLAG)
+			break;
 
-		b = promptAndGetLD("b = ", buff, MT_QFC_BUFF_SIZE);
-		if (temp = LDErrorCheck(b, MT_QFC_ERROR_MSG))
+		b = promptAndGetLD("b = ", buff, MT_QFC_BUFF_SIZE, &MT_QUIT_FLAG);
+		if ((temp = errorCheckLD(b)) && !MT_QUIT_FLAG)
 		{
-			if (temp == MT_QUIT)
-				break;
-			else
-				continue;
+			printf("%s", MT_QFC_ERROR_MSG);
+			continue;
 		}
+		else if (MT_QUIT_FLAG)
+			break;
 
-		c = promptAndGetLD("c = ", buff, MT_QFC_BUFF_SIZE);
-		if (temp = LDErrorCheck(c, MT_QFC_ERROR_MSG))
+		c = promptAndGetLD("c = ", buff, MT_QFC_BUFF_SIZE, &MT_QUIT_FLAG);
+		if ((temp = errorCheckLD(c)) && !MT_QUIT_FLAG)
 		{
-			if (temp == MT_QUIT)
-				break;
-			else
-				continue;
+			printf("%s", MT_QFC_ERROR_MSG);
+			continue;
 		}
+		else if (MT_QUIT_FLAG)
+			break;
 
-		break;
-	} // User input collection loop
-
-	if (!MT_QUIT_FLAG) // Only loop while the user has not quit
-	{
 		putchar('\n');
 
 		discriminant = (b * b) - (4 * a * c);
@@ -115,5 +109,6 @@ void quadraticFormula()
 		}
 
 		putchar('\n');
-	} // while() use has not quit
+
+	} // User input & output loop
 }

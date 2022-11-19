@@ -4,11 +4,11 @@
 #include <math.h>
 #include <string.h>
 
-extern bool MT_QUIT_FLAG;
-
 // ARG0: Message that the user will be prompted to enter data with
 // ARG1: Buffer to hold data
-long double promptAndGetLD(const char *message, char *buff, size_t buffSize)
+// ARG2: Size of the buffer
+// ARG3: Flag to let the programmer quit (compares to MT_ESCAPE)
+long double promptAndGetLD(const char *message, char *buff, size_t buffSize, bool *QUIT_FLAG)
 {
 	long double retVal = 0.0L; // Hold value that may be returned
 
@@ -18,15 +18,40 @@ long double promptAndGetLD(const char *message, char *buff, size_t buffSize)
 	{
 		retVal = strtold(buff, nullptr); // Convert the input string into a long double
 
-		if (strncmp(buff, MT_ESCAPE, MT_ESCAPE_SIZE) == 0) // Check if the user wants to exit program
-			MT_QUIT_FLAG = true;
-		else if (retVal == 0.0 && !onlyZeroF(buff)) // Check if strtold() could not convert the input
+		*QUIT_FLAG = quitCheck(buff);
+
+		if (retVal == 0.0 && !onlyZeroF(buff)) // Check if strtold() could not convert the input
 			return INFINITY;
 		else
 			return retVal;
 	}
 	else
 		return INFINITY;
+}
+
+// ARG0: Message that the user will be prompted to enter data with
+// ARG1: Buffer to hold data
+// ARG2: Size of the buffer
+// ARG3: Flag to let the programmer quit (compares to MT_ESCAPE)
+long long promptAndGetLL(const char *message, char *buff, size_t buffSize, bool *QUIT_FLAG)
+{
+	long long retVal = 0LL; // Hold value that may be returned
+
+	printf("%s", message); // Prompt user to enter data
+
+	if (getInput(buff, buffSize) != nullptr)
+	{
+		retVal = strtoll(buff, nullptr, 10); // Convert the input into base 10
+
+		*QUIT_FLAG = quitCheck(buff);
+
+		if (retVal == 0 && !onlyZero(buff)) // Check if strtold() could not convert the input
+			return LLONG_MAX;
+		else
+			return retVal;
+	}
+	else
+		return LLONG_MAX;
 }
 
 // ARG0: Buffer that holds data from stdin
@@ -57,15 +82,33 @@ char *getInput(char *buffer, size_t bufferSize)
 	return buffer;
 }
 
-short LDErrorCheck(long double input, const char *errorMessage)
+// Check if the user entered an escape str
+// If the str is not null-terminated then undefined behavior
+// WILL modify input str
+bool quitCheck(char *str)
 {
-	if (MT_QUIT_FLAG)
-		return MT_QUIT;
-	else if (isinf(input) || (input == HUGE_VALL))
-	{
-		printf("%s", errorMessage);
-		return MT_LD_ERROR;
-	}
+	strToUpper(str); // Input is not case sensetive
+
+	if (strncmp(str, MT_ESCAPE, MT_ESCAPE_SIZE) == 0)
+		return true;
 	else
-		return MT_LD_NO_ERROR;
+		return false;
+}
+
+// Check for errors from the long double class and print a message
+short errorCheckLD(long double input)
+{
+	if (isinf(input) || (input == HUGE_VALL))
+		return MT_TYPE_ERROR;
+	else
+		return MT_NO_ERROR;
+}
+
+// Check for errors from the long double class and print a message
+short errorCheckLL(long long input)
+{
+	if ((input == LLONG_MAX) || (input == LLONG_MIN))
+		return MT_TYPE_ERROR;
+	else
+		return MT_NO_ERROR;
 }
