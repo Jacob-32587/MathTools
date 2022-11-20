@@ -25,7 +25,7 @@ long double promptAndGetLD(const char *message, char *buff, size_t buffSize, boo
 		else
 			return retVal;
 	}
-	else
+	else // Bad input
 		return INFINITY;
 }
 
@@ -95,7 +95,7 @@ bool quitCheck(char *str)
 		return false;
 }
 
-// Check for errors from the long double class and print a message
+// Check for errors of a long double parsed by strtold
 short errorCheckLD(long double input)
 {
 	if (isinf(input) || (input == HUGE_VALL))
@@ -104,7 +104,7 @@ short errorCheckLD(long double input)
 		return MT_NO_ERROR;
 }
 
-// Check for errors from the long double class and print a message
+// Check for errors of a long long parsed by strtoll
 short errorCheckLL(long long input)
 {
 	if ((input == LLONG_MAX) || (input == LLONG_MIN))

@@ -1,6 +1,6 @@
 - This project is a suite of math tools to solve various problems. Version are formatted as
-"MAJOR.MINOR.REVISION".  Each new tool added is MAJOR release occur when 2 new tools are added OR a major change in made to the program. MINOR versions usually indicate a new tool
-has been added and small changes to the MINOR version usually represent tweaks in the latest added feature.
+"MAJOR.MINOR.REVISION".  MAJOR release occur when 2 new tools are added OR a major change in made to the program. MINOR versions usually indicate a new tool has been added.  The 
+REVISION usually represents small tweaks made to the programs internals
 
 - The program consist of a "main menu" where a program can be selected from.  The main program (and any sub programs) can always be exited by entering "quit" as an input.
 
