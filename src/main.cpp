@@ -3,8 +3,11 @@
 #include "../include/MTBaseConvertor.hpp"
 #include "../include/MTString.hpp"
 #include "../include/MTLinkedList.hpp"
+#include "../include/MTMath.hpp"
 #include <stdio.h>
 #include <string.h>
+#include <chrono>
+#include <iostream>
 #include <math.h>
 
 #define MT_MAIN_BUFFER_SIZE 32
@@ -29,6 +32,7 @@ static bool MT_QUIT_FLAG = false;
 
 int main()
 {
+
 	char buff[MT_MAIN_BUFFER_SIZE]; // Hold user input
 	while (!MT_QUIT_FLAG)
 	{

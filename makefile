@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -g
+CFLAGS = -g -O3
 
 TARGET = main
 
